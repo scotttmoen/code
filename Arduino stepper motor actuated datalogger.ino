@@ -8,14 +8,14 @@
 RTC_DS1307 RTC;
 File logfile;
 const int stepsPerRevolution = 200;  // number of steps per revolution
-Stepper Stepp(stepsPerRevolution,4,5,6,7); 
+Stepper Stepp(stepsPerRevolution,4,5,6,7);
 int AnalogPin = 0;//sensor input
 int amppwr = 3;//ald1726 pwr
 int ledPin = 8;
 unsigned long cycleminutes  = 10;//time between readings,adjusted for reading time in program
 int sortedValues;
 int readsperwell = 250;
-int wells = 25; //well number 
+int wells = 25; //well number
 
 void setup(void){
   Serial.begin(9600);
@@ -23,16 +23,16 @@ void setup(void){
   pinMode(amppwr,OUTPUT);//ald1726 pwr
   Serial.print("Initializing SD card...");
   pinMode(10, OUTPUT);//SD card power
-  if (!SD.begin(10)) {  
+  if (!SD.begin(10)) {
   }
   Serial.println("card initialized.");
-  SD.begin(10);  
+  SD.begin(10);
   char filename[] = "LOGGER00.CSV";
   for (uint8_t p = 0; p < 100; p++) {
     filename[6] = p/10 + '0';
     filename[7] = p%10 + '0';
     if (! SD.exists(filename)) {
-      logfile = SD.open(filename, FILE_WRITE); 
+      logfile = SD.open(filename, FILE_WRITE);
       break;
     }
   }
@@ -48,7 +48,7 @@ void setup(void){
   for (int n=1;n<wells+1;n++){
     logfile.print(n);
     logfile.print(",");
- }  
+ }
 }
 
 void loop(void) {
@@ -71,9 +71,9 @@ void loop(void) {
   logfile.print(now.minute(), DEC);
   logfile.print(":");
   logfile.print(now.second(), DEC);
-  
+
   logfile.print(",");
-  
+
   for(int m=0;m<wells;m++){//loop for each well
 
 delay(1000);
@@ -130,21 +130,3 @@ delay(1000);
   logfile.flush();
   delay(offset*1000);
 }//for void loop
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
